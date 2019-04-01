@@ -1,6 +1,7 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import { Post } from '../post.model';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-create',
@@ -8,25 +9,16 @@ import { Post } from '../post.model';
   styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent implements OnInit {
-  enteredTitle = '';
-  enteredContent = '';
-  @Output() postCreated = new EventEmitter<Post>();
 
-  constructor() {}
+  constructor(public postsService: PostsService) {}
 
   ngOnInit() {}
 
-  onAddPost() {
-    if (this.enteredTitle.length > 0 && this.enteredContent.length > 0) {
-      const post: Post = {
-        title: this.enteredTitle,
-        content: this.enteredContent
-      };
-      this.postCreated.emit(post);
-      this.enteredTitle = '';
-      this.enteredContent = '';
-    } else {
-      alert('Please fill both the fields!!!');
+  onAddPost(form: NgForm) {
+    if (form.invalid) {
+      return;
     }
+    this.postsService.addPost(form.value.title, form.value.content);
+    form.resetForm();
   }
 }
