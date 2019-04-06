@@ -39,13 +39,18 @@ export class AuthService {
       .post('http://localhost:3000/api/user/signup', authData)
       .subscribe(response => {
         this.router.navigate(['/all-posts']);
+      }, error => {
+        this.authStatusListener.next(false);
       });
   }
 
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post<{ token: string, expiresIn: number, userId: string }>('http://localhost:3000/api/user/login', authData)
+      .post<{ token: string; expiresIn: number; userId: string }>(
+        'http://localhost:3000/api/user/login',
+        authData
+      )
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -56,10 +61,14 @@ export class AuthService {
           this.userId = response.userId;
           this.authStatusListener.next(true);
           const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          const expirationDate = new Date(
+            now.getTime() + expiresInDuration * 1000
+          );
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(['/all-posts']);
         }
+      }, error => {
+        this.authStatusListener.next();
       });
   }
 
@@ -120,5 +129,4 @@ export class AuthService {
       userId: userId
     };
   }
-
 }
