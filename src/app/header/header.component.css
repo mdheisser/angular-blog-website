@@ -10,6 +10,10 @@ a {
   color: white;
 }
 
+.title-name {
+  font-size: 1.3rem;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
