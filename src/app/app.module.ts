@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterialModule } from './angular-material.module';
 import { PostsModule } from './posts/posts.module';
-import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -28,8 +27,7 @@ import { ErrorComponent } from './error/error.component';
     BrowserAnimationsModule,
     HttpClientModule,
     AngularMaterialModule,
-    PostsModule,
-    AuthModule
+    PostsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
