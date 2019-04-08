@@ -23,7 +23,7 @@ mongoose
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static(path.join("images")));
+app.use("/images", express.static(path.join("backend/images"))); //when deploying change path to just "images"
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

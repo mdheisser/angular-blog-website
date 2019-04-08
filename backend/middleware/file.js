@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "images");
+    cb(error, "backend/images"); //when deploying change path to just "images"
   },
   filename: (req, file, cb) => {
     const name = file.originalname
